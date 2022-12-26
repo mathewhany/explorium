@@ -1,7 +1,7 @@
 const config = require("../config");
 const MongoClient = require("mongodb").MongoClient;
 
-const client = new MongoClient(config.connectionString);
+const client = new MongoClient(process.env.MONGO_URI || config.connectionString);
 
 function connect() {
   return client
