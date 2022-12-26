@@ -18,15 +18,25 @@ app.use(
     saveUninitialized: true,
   })
 );
+
 app.use((req, res, next) => {
-  if (!req.session.username) {
-    if (req.path != "/login" && req.path != "/registeration") {
+  const nonAuthRoutes = ["/login", "/register"];
+
+  if (nonAuthRoutes.includes(req.path)) {
+    if (req.session.username) {
+      res.redirect('/');
+      return;
+    }
+  } else {
+    if (!req.session.username) {
       res.redirect("/login");
+      return;
     }
   }
 
-  next();
+  return next();
 });
+
 app.use(require("./routes"));
 
 db.connect().then(() => {

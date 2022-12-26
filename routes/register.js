@@ -2,7 +2,7 @@ const express = require("express");
 const auth = require("../db/auth");
 const router = express.Router();
 
-router.get("/registration", (req, res) => {
+router.get("/register", (req, res) => {
   res.render("registration");
 });
 
@@ -21,7 +21,7 @@ router.post("/register", (req, res) => {
       res.render("registration", { error: "Username already exists." });
     } else {
       auth.registerUser(username, password).then(() => {
-        res.redirect("/login");
+        res.redirect("/login?success=true");
       });
     }
   });

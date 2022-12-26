@@ -19,11 +19,17 @@ function isUsernameAndPasswordValid(username, password) {
 }
 
 function registerUser(username, password) {
-  return db.collection("users").insertOne({ username, password });
+  const user = {
+    username,
+    password,
+    wantToGo: [],
+  };
+
+  return db.collection("users").insertOne(user);
 }
 
 module.exports = {
   isUsernameAndPasswordValid,
   registerUser,
-  userExists
+  userExists,
 };
