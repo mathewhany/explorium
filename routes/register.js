@@ -1,5 +1,5 @@
 const express = require("express");
-const auth = require("../db/auth");
+const users = require("../db/users");
 const router = express.Router();
 
 router.get("/register", (req, res) => {
@@ -16,12 +16,13 @@ router.post("/register", (req, res) => {
     return;
   }
 
-  auth.userExists(username).then((exists) => {
+  users.userExists(username).then((exists) => {
     if (exists) {
       res.render("registration", { error: "Username already exists." });
     } else {
-      auth.registerUser(username, password).then(() => {
-        res.redirect("/login?success=true");
+      users.registerUser(username, password).then(() => {
+        req.session.message = "Registered successfully.";
+        res.redirect("/login");
       });
     }
   });

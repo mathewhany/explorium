@@ -40,7 +40,9 @@ app.use((req, res, next) => {
 app.use(require("./routes"));
 
 db.connect().then(() => {
-  app.listen(config.port, () => {
-    console.log("Server is running on http://localhost:" + config.port);
+  const port = process.env.PORT || config.port
+  
+  app.listen(port, () => {
+    console.log("Server is running on http://localhost:" + port);
   });
 });

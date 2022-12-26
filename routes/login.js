@@ -1,25 +1,28 @@
 const express = require("express");
-const auth = require("../db/auth");
+const users = require("../db/users");
 
 const router = express.Router();
 
 router.get("/login", (req, res) => {
-  res.render("login");
+  const message = req.session.message;
+  req.session.message = null;
+
+  res.render("login", { message });
 });
 
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
 
-  auth.userExists(username).then((exists) => {
+  users.userExists(username).then((exists) => {
     if (!exists) {
-      res.render("login", { error: "This user does not exist" });
+      res.render("login", { message: "This user does not exist" });
     } else {
-      auth.isUsernameAndPasswordValid(username, password).then((isValid) => {
+      users.isUsernameAndPasswordValid(username, password).then((isValid) => {
         if (isValid) {
           req.session.username = username;
           res.redirect("/");
         } else {
-          res.render("login", { error: "Invalid username or password" });
+          res.render("login", { message: "Invalid username or password" });
         }
       });
     }
