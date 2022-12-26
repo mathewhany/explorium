@@ -7,5 +7,6 @@ router.use(require('./home'));
 router.use(require('./categories'));
 router.use(require('./destinations'));
 router.use(require('./want-to-go'));
+router.use(require('./search'))
 
 module.exports = router;
