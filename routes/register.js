@@ -2,7 +2,7 @@ const express = require("express");
 const users = require("../db/users");
 const router = express.Router();
 
-router.get("/register", (req, res) => {
+router.get("/registration", (req, res) => {
   res.render("registration");
 });
 

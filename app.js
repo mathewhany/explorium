@@ -9,7 +9,7 @@ const app = express();
 
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname + "/public"));
 app.use(
   session({
@@ -20,7 +20,7 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  const nonAuthRoutes = ["/login", "/register"];
+  const nonAuthRoutes = ["/login", "/register", "/registration"];
 
   if (nonAuthRoutes.includes(req.path)) {
     if (req.session.username) {
