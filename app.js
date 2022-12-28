@@ -22,12 +22,7 @@ app.use(
 app.use((req, res, next) => {
   const nonAuthRoutes = ["/login", "/register", "/registration"];
 
-  if (nonAuthRoutes.includes(req.path)) {
-    if (req.session.username) {
-      res.redirect('/');
-      return;
-    }
-  } else {
+  if (!nonAuthRoutes.includes(req.path)) {
     if (!req.session.username) {
       res.redirect("/login");
       return;
@@ -40,8 +35,8 @@ app.use((req, res, next) => {
 app.use(require("./routes"));
 
 db.connect().then(() => {
-  const port = process.env.PORT || config.port
-  
+  const port = process.env.PORT || config.port;
+
   app.listen(port, () => {
     console.log("Server is running on http://localhost:" + port);
   });
